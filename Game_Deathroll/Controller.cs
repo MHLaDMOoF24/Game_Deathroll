@@ -74,16 +74,29 @@ namespace Game_Deathroll
             do
             {
                 calc.PlayRound();
-                if (calc.CurrentNumber != 0)
+                Console.Write($" {calc.PlayersRemaining[calc.CurrentPlayer]} rolled ");
+                for (int i = 0; i < 3; i++)
                 {
-                    Console.Write($" {calc.PlayersRemaining[calc.CurrentPlayer]} rolled {calc.CurrentNumber}.");
+                    System.Threading.Thread.Sleep(500);
+                    Console.Write(".");
+                }
+                if (calc.CurrentNumber == 0)
+                {
+                    Console.WriteLine($" {calc.CurrentNumber}!");
+                    System.Threading.Thread.Sleep(1000);
+                    Console.WriteLine($" {calc.PlayersRemaining[calc.CurrentPlayer]} has lost!");
+                    EliminatePlayer();
+                }
+                else if (calc.CurrentNumber == 1)
+                {
+                    Console.Write($" {calc.CurrentNumber}..!");
+                    Console.ReadLine();
                 }
                 else
                 {
-                    Console.Write($" {calc.PlayersRemaining[calc.CurrentPlayer]} rolled {calc.CurrentNumber} and lost!");
-                    EliminatePlayer();
+                    Console.Write($" {calc.CurrentNumber}.");
+                    Console.ReadLine();
                 }
-                Console.ReadLine();
             } while (calc.PlayersRemaining.Count > 1);
 
             Console.WriteLine($"\n{calc.PlayersRemaining[0]} has won Deathroll!");
@@ -93,8 +106,11 @@ namespace Game_Deathroll
         {
             calc.EliminateCurrentPlayer();
             calc.ResetNumber();
-            PressEnterToContinue();
-            InitializeRound();
+            if (calc.PlayersRemaining.Count > 1)
+            {
+                PressEnterToContinue();
+                InitializeRound();
+            }
         }
 
         public void InitializeRound()

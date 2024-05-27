@@ -12,8 +12,8 @@ namespace Game_Deathroll
         {
             this._initialNumber = number;
             this._currentNumber = number;
-            this._playersNames = names;
-            this._playersRemaining = names;
+            this._playersNames = new List<string>(names);
+            this._playersRemaining = new List<string>(names);
             this._currentPlayer = names.Count;
         }
 
@@ -39,7 +39,7 @@ namespace Game_Deathroll
 
         public void Roll()
         {
-            _currentNumber = _random.Next(_currentNumber);
+            _currentNumber = _random.Next(_currentNumber + 1);
             //return _currentNumber;
         }
 
