@@ -40,7 +40,6 @@ namespace Game_Deathroll
         public void Roll()
         {
             _currentNumber = _random.Next(_currentNumber + 1);
-            //return _currentNumber;
         }
 
         public void SetCurrentPlayer()
@@ -61,6 +60,12 @@ namespace Game_Deathroll
         public void ResetNumber()
         {
             _currentNumber = _initialNumber;
+        }
+
+        public void ResetGame()
+        {
+            _playersRemaining = _playersNames;
+            _currentPlayer = _playersNames.Count;
         }
     }
 }

@@ -70,6 +70,7 @@ namespace Game_Deathroll
         // Add commentary-like phrases depending on how the number changes?
         public void RunGame()
         {
+            calc.ResetGame();
             InitializeRound();
             do
             {
@@ -100,6 +101,7 @@ namespace Game_Deathroll
             } while (calc.PlayersRemaining.Count > 1);
 
             Console.WriteLine($"\n{calc.PlayersRemaining[0]} has won Deathroll!");
+            System.Threading.Thread.Sleep(2000);
         }
 
         public void EliminatePlayer()
@@ -117,6 +119,28 @@ namespace Game_Deathroll
         {
             Console.Clear();
             Console.WriteLine($"Deathrolling from {calc.InitialNumber}, with {calc.PlayersRemaining.Count} out of {calc.PlayersNames.Count} participants remaining.");
+        }
+
+
+
+        public int EndGame()
+        {
+            int decision;
+            do
+            {
+                Console.Clear();
+                Console.WriteLine($"The Deathroll has spoken, and the winner is...");
+                Console.WriteLine($"... {calc.PlayersRemaining[0]}!!");
+                Console.WriteLine($"\nPress 1 to continue this Deathroll.");
+                Console.WriteLine($"Press 2 to Deathroll with new settings.");
+                Console.WriteLine($"Press 3 to stop Deathrolling.");
+                if (int.TryParse(Console.ReadLine(), out decision) && decision > 0 && decision < 4)
+                {
+                    return decision;
+                }
+                else decision = -1;
+            } while (decision == -1);
+            return 0;
         }
 
 
