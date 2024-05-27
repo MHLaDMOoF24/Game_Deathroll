@@ -36,29 +36,18 @@ namespace Game_Deathroll
             do
             {
                 Welcome();
-                ShowPlayers();
-                Console.Write("Please enter your starting number here: ");
+                ShowPlayersInit();
+                Console.Write("\nPlease enter your starting number here: ");
                 initNumber = IntFormatted(Console.ReadLine());
             } while (initNumber == -1);
 
-            calc = new Calc(initNumber, playerNames);
             //Console.WriteLine("Which mode do you wish to play?");
             //Console.WriteLine("a) Single round - A single round for a single bet");
             //Console.WriteLine("b) Elimination - Continue until only one remains");
 
-            // Add options at end: "Repeat game or new game?"
-
-            // Add commentary-like phrases depending on how the number changes?
+            calc = new Calc(initNumber, playerNames);
+            PressEnterToContinue();
         }
-
-        public void RunGame()
-        {
-
-        }
-
-
-
-
 
         public void Welcome()
         {
@@ -67,7 +56,7 @@ namespace Game_Deathroll
             Console.WriteLine("Whatever you bet, the dice will decide who comes out on top.");
             Console.WriteLine("The rules are simple: The first to roll 0 loses.\n");
         }
-        public void ShowPlayers()
+        public void ShowPlayersInit()
         {
             Console.WriteLine($"Please enter the number of participants: {initPlayers}");
             for (int i = 0; i < playerNames.Count; i++)
@@ -76,10 +65,50 @@ namespace Game_Deathroll
             }
         }
 
+
+
+        // Add commentary-like phrases depending on how the number changes?
+        public void RunGame()
+        {
+            InitializeRound();
+            do
+            {
+                calc.PlayRound();
+                if (calc.CurrentNumber != 0)
+                {
+                    Console.Write($" {calc.PlayersRemaining[calc.CurrentPlayer]} rolled {calc.CurrentNumber}.");
+                }
+                else
+                {
+                    Console.Write($" {calc.PlayersRemaining[calc.CurrentPlayer]} rolled {calc.CurrentNumber} and lost!");
+                    EliminatePlayer();
+                }
+                Console.ReadLine();
+            } while (calc.PlayersRemaining.Count > 1);
+
+            Console.WriteLine($"\n{calc.PlayersRemaining[0]} has won Deathroll!");
+        }
+
+        public void EliminatePlayer()
+        {
+            calc.EliminateCurrentPlayer();
+            calc.ResetNumber();
+            PressEnterToContinue();
+            InitializeRound();
+        }
+
+        public void InitializeRound()
+        {
+            Console.Clear();
+            Console.WriteLine($"Deathrolling from {calc.InitialNumber}, with {calc.PlayersRemaining.Count} out of {calc.PlayersNames.Count} participants remaining.");
+        }
+
+
+
         public int IntFormatted(string stringInput)
         {
             int formatInput;
-            if (int.TryParse(stringInput, out formatInput) && formatInput > 0) { }
+            if (int.TryParse(stringInput, out formatInput) && formatInput > 1) { }
             else
             {
                 formatInput = -1;
@@ -90,10 +119,14 @@ namespace Game_Deathroll
 
         public void InputInvalid(string stringInput)
         {
-            Console.WriteLine($"{stringInput} is not valid input, press Enter to try again.");
+            Console.Write($"{stringInput} is not valid input, press Enter to try again. ");
             Console.ReadLine();
         }
 
-
+        public void PressEnterToContinue()
+        {
+            Console.Write("\nPress Enter to continue. ");
+            Console.ReadLine();
+        }
     }
 }

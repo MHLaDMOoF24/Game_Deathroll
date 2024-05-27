@@ -6,6 +6,11 @@
         {
             Controller controller = new Controller();
             controller.InitializeGame();
+            controller.RunGame();
         }
+
+
+
+        // Add options at end: "Repeat game or new game?"
     }
 }
