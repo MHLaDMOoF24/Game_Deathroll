@@ -76,15 +76,16 @@ namespace Game_Deathroll
             {
                 calc.PlayRound();
                 Console.Write($" {calc.PlayersRemaining[calc.CurrentPlayer]} rolled ");
+                System.Threading.Thread.Sleep(500);
                 for (int i = 0; i < 3; i++)
                 {
-                    System.Threading.Thread.Sleep(500);
                     Console.Write(".");
+                    System.Threading.Thread.Sleep(500);
                 }
                 if (calc.CurrentNumber == 0)
                 {
                     Console.WriteLine($" {calc.CurrentNumber}!");
-                    System.Threading.Thread.Sleep(1000);
+                    System.Threading.Thread.Sleep(500);
                     Console.WriteLine($" {calc.PlayersRemaining[calc.CurrentPlayer]} has lost!");
                     EliminatePlayer();
                 }
@@ -101,7 +102,7 @@ namespace Game_Deathroll
             } while (calc.PlayersRemaining.Count > 1);
 
             Console.WriteLine($"\n{calc.PlayersRemaining[0]} has won Deathroll!");
-            System.Threading.Thread.Sleep(2000);
+            PressEnterToContinue();
         }
 
         public void EliminatePlayer()
@@ -131,9 +132,10 @@ namespace Game_Deathroll
                 Console.Clear();
                 Console.WriteLine($"The Deathroll has spoken, and the winner is...");
                 Console.WriteLine($"... {calc.PlayersRemaining[0]}!!");
-                Console.WriteLine($"\nPress 1 to continue this Deathroll.");
-                Console.WriteLine($"Press 2 to Deathroll with new settings.");
-                Console.WriteLine($"Press 3 to stop Deathrolling.");
+                Console.WriteLine($"\n1) Continue this Deathroll.");
+                Console.WriteLine($"2) Deathroll with new settings.");
+                Console.WriteLine($"3) Stop Deathrolling.");
+                Console.Write("\nEnter input here: ");
                 if (int.TryParse(Console.ReadLine(), out decision) && decision > 0 && decision < 4)
                 {
                     return decision;

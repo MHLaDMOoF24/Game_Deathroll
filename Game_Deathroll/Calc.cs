@@ -64,7 +64,7 @@ namespace Game_Deathroll
 
         public void ResetGame()
         {
-            _playersRemaining = _playersNames;
+            _playersRemaining = new List<string>(_playersNames);
             _currentPlayer = _playersNames.Count;
         }
     }
